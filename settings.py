@@ -20,7 +20,7 @@ g = 1
 #
 # =============================================================== #
 
-dt = 1          # timestep
+dt = 1         # timestep
 time = 5        # total time of the simulation (0 - time)
 numParts = 2  #number of Chill Ass Newtrons
 yMin = -10  #m
