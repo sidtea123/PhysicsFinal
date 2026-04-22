@@ -1,6 +1,7 @@
 import numpy as np
 import settings as s
 from particle import Particle
+import random
 
 particles = [0 for _ in range(s.numParts)]
 positions = [[0] * int(s.time / s.dt + 1) for _ in range(s.numParts)]
@@ -20,14 +21,11 @@ def simulate():
 # need to initialize particle and initial position
 def initalizeParticles():
     for i in range(s.numParts):
-        # particle spawning, for now just one
-        if (i == 0):
-            r = np.array([0.0, 0.0])
-            v = np.array([0.0, 0.0])
-            particles[i] = Particle(r, v, 1)
-            positions[i][0] = r.copy()
-        else:
-            r = np.array([5.0, 5.0])
-            v = np.array([0.0, 0.0])
-            particles[i] = Particle(r, v, 1)
-            positions[i][0] = r.copy()
+        theta = random.uniform(s.thetamin,s.thetamax)
+        vini = random.uniform(s.vinimin,s.vinimax)
+        r = np.array([random.uniform(s.spawnxmin,s.spawnxmax),random.uniform(s.spawnymin,s.spawnymax)])
+        v = np.array([vini*np.cos(theta),vini*np.sin(theta)])
+        particles[i] = Particle(r, v, 1)
+        positions[i][0] = r.copy()
+        
+
