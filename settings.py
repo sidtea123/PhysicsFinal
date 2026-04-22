@@ -20,13 +20,20 @@ g = 1
 #
 # =============================================================== #
 
-dt = 1         # timestep
-time = 5        # total time of the simulation (0 - time)
-numParts = 2  #number of Chill Ass Newtrons
+dt = 0.05         # timestep
+time = 10        # total time of the simulation (0 - time)
+numParts = 50  #number of Chill Ass Newtrons
 yMin = -10  #m
 yMax = 10  #m
 xmin = 0  #m
 xmax = 100  #m
+screenBorderOffset = 10 # cushy bounds to make view not cover bounds
+screenScale = 10 # pygame tiny, need to scale
+
+particleRadius = 3
+particleColor = (70, 175, 245)
+backgroundColor = (70, 70, 70)
+boundColor = (30, 30, 30)
 
 spawnymin = -9.99  #m
 spawnymax = 9.99  #m
