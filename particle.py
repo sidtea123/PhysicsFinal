@@ -1,5 +1,7 @@
 import settings as s
 import numpy as np
+import computation as c
+import random
 
 class Particle:
     def __init__(self, r, v, p):
@@ -31,8 +33,12 @@ class Particle:
 
     def LossProb(self):
         E = 1/2 * s.m * self.v**2
-        #sreflect = 2 * s.f * ((E * np.cos()**2) / )
-        
+        reflectprob = 2 * s.f * ((E * np.cos(2 * c.theta - np.pi)**2) / (s.V - E * np.cos(2 * c.theta - np.pi)**2))**(0.5)
+        r = random.uniform(0, 1)
+        return reflectprob, r
+        # in order to implement this we need to say that if r >= reflectprob then the neutron survives and if r < reflectprob then we delete the neutron
+        # I believe this must be done in the pygame but I'm scared to touch Sid's work of art
+
     def calculateGradientForce(self):
         gradient = np.array([0,self.r[1]])
         return self.p * s.mu * s.B * gradient
