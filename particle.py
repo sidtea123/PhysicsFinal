@@ -22,13 +22,17 @@ class Particle:
         return Fg + Fb
     
     
-#wall is made of Beryllium due to high optical potential of 252NeV
+    # wall is made of Beryllium due to high optical potential of 252NeV
     def boundaryCheck(self):
         if (self.r + self.v * s.dt)[1] > s.yMax:
             self.v[1] = -self.v[1]
         elif (self.r + self.v * s.dt)[1] < s.yMin:
             self.v[1] = -self.v[1]
 
+    def LossProb(self):
+        E = 1/2 * s.m * self.v**2
+        #sreflect = 2 * s.f * ((E * np.cos()**2) / )
+        
     def calculateGradientForce(self):
         gradient = np.array([0,self.r[1]])
         return self.p * s.mu * s.B * gradient
