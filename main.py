@@ -23,11 +23,10 @@ while tIndex < len(posMatrix[0]):
     screen.fill(s.backgroundColor)
 
     for p in posMatrix:
+         rPygame = (p[tIndex][0] * s.screenScale + s.screenBorderOffset + (s.spawnxmax - s.spawnxmin) / 2,
+                    -p[tIndex][1] * s.screenScale + screenHeight / 2)
          pygame.draw.circle(screen, 
-                            s.particleColor, 
-                            (p[tIndex][0] * s.screenScale + s.screenBorderOffset + (s.spawnxmax - s.spawnxmin) / 2, 
-                             -p[tIndex][1] * s.screenScale + screenHeight / 2), 
-                             s.particleRadius)
+                            s.particleColor, rPygame, s.particleRadius)
     pygame.draw.line(screen, 
                      s.boundColor, 
                      (s.screenBorderOffset, yOffset), 
