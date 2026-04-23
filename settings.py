@@ -4,7 +4,7 @@ import numpy as np
 #  particle variables
 #
 # =============================================================== #
-mu = 1
+mu = 1  #actual magnetic moment of neturon is -6.0293e-8 eV
 m = 1
 
 # =============================================================== #
@@ -44,3 +44,7 @@ vinimin = 2 #m/s
 vinimax = 6  #m/s
 thetamin = -np.pi/4 #radians
 thetamax = np.pi/4  #radians
+
+
+# Magnetic Field
+B = 0.15

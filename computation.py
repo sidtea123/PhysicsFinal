@@ -27,5 +27,4 @@ def initalizeParticles():
         v = np.array([vini*np.cos(theta),vini*np.sin(theta)])
         particles[i] = Particle(r, v, 1)
         positions[i][0] = r.copy()
-        
 
