@@ -19,7 +19,7 @@ class Particle:
 
     def caluclateForce(self):
         Fg = np.array([0, -s.g  * s.m])
-        Fb = self.calculateGradientForce()  #want Fg = Fb @ middle. Fb<Fg @ y>middle. Fb>Fg @ y<middle.
+        Fb = np.array([0,self.mag_field()])  #want Fg = Fb @ middle. Fb<Fg @ y>middle. Fb>Fg @ y<middle.
 
         return Fg + Fb
     
@@ -43,6 +43,20 @@ class Particle:
         # I believe this must be done in the pygame but I'm scared to touch Sid's work of art
         # as you should be
 
-    def calculateGradientForce(self):
-        gradient = np.array([0,self.r[1]])
-        return self.p * s.mu * s.B * gradient
+    #def calculateGradientForce(self):
+        #gradient = np.array([0,self.r[1]])      TS IS BUNS DONT USE
+        #return self.p * s.mu * s.B * gradient
+
+    def mag_field(self):
+        if self.r[1] > 0.5 * s.ymax:
+            B_high = 0.25 * s.B
+            mag_force = self.p * s.mu * B_high
+        if self.r[1] == 0.5 * s.ymax:
+            mag_force = self.p * s.mu * s.B
+        if self.r[1] < 0.5 * s.ymax:
+            B_low = 1.25 * s.B
+            mag_force = self.p * s.mu * B_low
+        return mag_force
+
+        #I think this might work but changing the y bounds (ymax = #) doesnt effect the bounds in pygame
+        #neccessary to change bounds because working off of y position
