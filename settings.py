@@ -21,13 +21,31 @@ V = 252 * 10**-9
 #
 # =============================================================== #
 
-dt = 0.05         # timestep
-time = 10        # total time of the simulation (0 - time)
-numParts = 50  #number of Chill Ass Newtrons
-yMin = -10  #m
-yMax = 10  #m
+dt = 0.05       # timestep
+time = 10       # total time of the simulation (0 - time)
+numParts = 50   # number of Chill Ass Newtrons
+
+# formulas for boundaries
+def O(x):
+    return 10
+
+def I(x):
+    return 0.1 * np.sin(x) - 10
+
+# returns normals for O, I at (x, f(x))
+# you need to manually derive these vectors, have fun!
+def nO(x):
+    return np.array([0, -1])
+
+def nI(x):
+    return np.array([0, 1])
+
+pygameBoundResolution = 50 # how many points to sample for pygame visualization
+
 xmin = 0  #m
 xmax = 100  #m
+ymin = -10
+ymax = 10
 screenBorderOffset = 10 # cushy bounds to make view not cover bounds
 screenScale = 10 # pygame tiny, need to scale
 
@@ -35,6 +53,7 @@ particleRadius = 3
 particleColor = (70, 175, 245)
 backgroundColor = (70, 70, 70)
 boundColor = (30, 30, 30)
+boundSize = 2
 
 spawnymin = -9.99  #m
 spawnymax = 9.99  #m

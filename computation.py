@@ -28,3 +28,7 @@ def initalizeParticles():
         particles[i] = Particle(r, v, 1)
         positions[i][0] = r.copy()
 
+
+# reflects vector v across surface normal n, returns reflected
+def reflect(v, n):
+    return (v - 2 * np.dot(v, n) * n).copy()

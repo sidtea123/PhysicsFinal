@@ -25,11 +25,14 @@ class Particle:
     
     
     # wall is made of Beryllium due to high optical potential of 252NeV
+    # now using custom bounds formulas in settings
     def boundaryCheck(self):
-        if (self.r + self.v * s.dt)[1] > s.yMax:
-            self.v[1] = -self.v[1]
-        elif (self.r + self.v * s.dt)[1] < s.yMin:
-            self.v[1] = -self.v[1]
+        r = self.r + self.v * s.dt
+        x, y = r
+        if (y > s.O(x)):
+            self.v = c.reflect(self.v, s.nO(x))
+        elif (y < s.I(x)):
+            self.v = c.reflect(self.v, s.nI(x))
 
     def LossProb(self):
         E = 1/2 * s.m * self.v**2
@@ -38,6 +41,7 @@ class Particle:
         return reflectprob, r
         # in order to implement this we need to say that if r >= reflectprob then the neutron survives and if r < reflectprob then we delete the neutron
         # I believe this must be done in the pygame but I'm scared to touch Sid's work of art
+        # as you should be
 
     def calculateGradientForce(self):
         gradient = np.array([0,self.r[1]])
