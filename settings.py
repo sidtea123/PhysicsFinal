@@ -6,7 +6,6 @@ import numpy as np
 # =============================================================== #
 mu = -6.0293*10**-8  #actual magnetic moment of neturon is -6.0293e-8 eV
 m = 1.67*10**-27
-#m = 0.001
 # =============================================================== #
 #
 # environment variables
@@ -42,10 +41,10 @@ def nI(x):
 
 pygameBoundResolution = 50 # how many points to sample for pygame visualization
 
-xmin = 0  #m
+xmin = 0  # the min and max x positions for the bound functions and window
 xmax = 100  #m
-ymin = 0.1
-ymax = 10
+ymin = -15 # min and max for window, but not necessarily bound functions
+ymax = 15
 screenBorderOffset = 10 # cushy bounds to make view not cover bounds
 screenScale = 10 # pygame tiny, need to scale
 
@@ -53,6 +52,9 @@ particleRadius = 3
 particleColor = (70, 175, 245)
 backgroundColor = (70, 70, 70)
 boundColor = (30, 30, 30)
+textColor = (179, 128, 18)
+fontSize = 24
+textYOffset = 45
 boundSize = 2
 
 spawnymin = 0.11  #m

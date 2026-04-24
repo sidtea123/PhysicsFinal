@@ -24,53 +24,39 @@ class Particle:
 
         return Fg + Fb
     
-    #def boundaryCheckbounce(self):
-        #if (self.r + self.v * s.dt)[1] > 10:
-            #self.v[1] = -self.v[1]
-        #elif (self.r + self.v * s.dt)[1] < -10:
-            #self.v[1] = -self.v[1]
-
     # wall is made of Beryllium due to high optical potential of 252NeV
     # now using custom bounds formulas in settings
     def boundaryCheck(self):
-        if (self.r + self.v * s.dt)[1] > 10:
-            self.v[1] = -self.v[1]
-        elif (self.r + self.v * s.dt)[1] < -10:
-            self.v[1] = -self.v[1]
-        E = 1/2 * s.m * np.dot(self.v, self.v) #I think there is an issue with the energy calculation and how it interacts with the potential energy of the walls
+        if (self.r[1] > s.O(self.r[0])):
+            if (self.tryLoss(s.nO)):
+                self.die()
+            else:
+                self.v = c.reflect(self.v, s.nO(self.r[0]))
+        elif (self.r[1] < s.I(self.r[0])):
+            if (self.tryLoss(s.nI)):
+                self.die()
+            else:
+                self.v = c.reflect(self.v, s.nI(self.r[0]))
+
+    def tryLoss(self, n):
+        E = 1/2 * s.m * np.dot(self.v, self.v)
         r = self.r + self.v * s.dt
         x, y = r
-        if (y > s.O(x)):
-            theta_Itop = np.arccos(np.abs((np.dot(self.v , s.nO(x)))) / (np.linalg.norm(self.v) * np.linalg.norm(s.nO(x))))
-            cos_term = np.cos(2 * theta_Itop - np.pi)**2
-            denom = s.V - E * cos_term
-            if denom <= 0:
-                self.dead = True
-            else:
-                reflectprob = min(1.0, 2 * s.fopt * np.sqrt((E * cos_term) / denom))
-                rfp = random.uniform(0, 1)
-                if (rfp >= reflectprob):
-                    self.v = c.reflect(self.v, s.nO(x))
-                else:
-                    self.dead = True
-        elif (y < s.I(x)):
-            theta_Ibot = np.arccos(np.abs((np.dot(self.v , s.nI(x)))) / (np.linalg.norm(self.v) * np.linalg.norm(s.nI(x))))
-            cos_term = np.cos(2 * theta_Ibot - np.pi)**2
-            denom = s.V - E * cos_term
-            if denom <= 0:
-                self.dead = True
-            else:
-                reflectprob = min(1.0, 2 * s.fopt *np.sqrt((E * cos_term) / denom))
-                rfp = random.uniform(0, 1)
-                if (rfp >= reflectprob):
-                    self.v = c.reflect(self.v, s.nI(x))
-                else:
-                    self.dead = True
-        self.r = r
+        # angle of incidence
+        theta = np.pi / 2 - np.abs(np.arccos(np.dot(self.v, n(x)) / (np.dot(self.v, self.v) * np.dot(n(x), n(x)))))
+        cos_term = np.cos(theta)**2
+        denom = s.V - E * cos_term
+        
+        if denom <= 0:
+            return False
+        else:
+            reflectprob = min(1.0, 2 * s.fopt *np.sqrt((E * cos_term) / denom))
+            rfp = random.uniform(0, 1)
+            return rfp < reflectprob
 
-    #def calculateGradientForce(self):
-        #gradient = np.array([0,self.r[1]])      TS IS BUNS DONT USE
-        #return self.p * s.mu * s.B * gradient
+    def die(self):
+        self.dead = True
+        print('i died')
 
     def mag_field(self):
         if self.r[1] > 0.5 * s.ymax:
