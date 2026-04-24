@@ -6,7 +6,7 @@ import numpy as np
 # =============================================================== #
 mu = -6.0293*10**-8  #actual magnetic moment of neturon is -6.0293e-8 eV
 m = 1.67*10**-27
-
+#m = 0.001
 # =============================================================== #
 #
 # environment variables
@@ -23,7 +23,7 @@ V = 252 * 10**-9
 
 dt = 0.05       # timestep
 time = 30       # total time of the simulation (0 - time)
-numParts = 50   # number of Chill Ass Newtrons
+numParts = 100   # number of Chill Ass Newtrons
 
 # formulas for boundaries
 def O(x):
@@ -55,8 +55,8 @@ backgroundColor = (70, 70, 70)
 boundColor = (30, 30, 30)
 boundSize = 2
 
-spawnymin = 4.5  #m
-spawnymax = 5.5  #m
+spawnymin = 0.11  #m
+spawnymax = 9.00  #m
 spawnxmin = 0.1  #m
 spawnxmax = 5  #m
 
@@ -67,4 +67,4 @@ thetamax = np.pi/4  #radians
 
 
 # Magnetic Field
-B = -2.69*10**-19
+B = -2.69*10**-19 * 0.5

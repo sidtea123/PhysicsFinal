@@ -8,6 +8,7 @@ class Particle:
         self.r = r
         self.v = v
         self.p = p
+        self.dead = False
 
     def runTimestep(self):
         f = self.caluclateForce()
@@ -23,25 +24,49 @@ class Particle:
 
         return Fg + Fb
     
-    
+    #def boundaryCheckbounce(self):
+        #if (self.r + self.v * s.dt)[1] > 10:
+            #self.v[1] = -self.v[1]
+        #elif (self.r + self.v * s.dt)[1] < -10:
+            #self.v[1] = -self.v[1]
+
     # wall is made of Beryllium due to high optical potential of 252NeV
     # now using custom bounds formulas in settings
     def boundaryCheck(self):
+        if (self.r + self.v * s.dt)[1] > 10:
+            self.v[1] = -self.v[1]
+        elif (self.r + self.v * s.dt)[1] < -10:
+            self.v[1] = -self.v[1]
+        E = 1/2 * s.m * np.dot(self.v, self.v) #I think there is an issue with the energy calculation and how it interacts with the potential energy of the walls
         r = self.r + self.v * s.dt
         x, y = r
         if (y > s.O(x)):
-            self.v = c.reflect(self.v, s.nO(x))
+            theta_Itop = np.arccos(np.abs((np.dot(self.v , s.nO(x)))) / (np.linalg.norm(self.v) * np.linalg.norm(s.nO(x))))
+            cos_term = np.cos(2 * theta_Itop - np.pi)**2
+            denom = s.V - E * cos_term
+            if denom <= 0:
+                self.dead = True
+            else:
+                reflectprob = min(1.0, 2 * s.fopt * np.sqrt((E * cos_term) / denom))
+                rfp = random.uniform(0, 1)
+                if (rfp >= reflectprob):
+                    self.v = c.reflect(self.v, s.nO(x))
+                else:
+                    self.dead = True
         elif (y < s.I(x)):
-            self.v = c.reflect(self.v, s.nI(x))
-
-    def LossProb(self):
-        E = 1/2 * s.m * self.v**2
-        reflectprob = 2 * s.f * ((E * np.cos(2 * c.theta - np.pi)**2) / (s.V - E * np.cos(2 * c.theta - np.pi)**2))**(0.5)
-        r = random.uniform(0, 1)
-        return reflectprob, r
-        # in order to implement this we need to say that if r >= reflectprob then the neutron survives and if r < reflectprob then we delete the neutron
-        # I believe this must be done in the pygame but I'm scared to touch Sid's work of art
-        # as you should be
+            theta_Ibot = np.arccos(np.abs((np.dot(self.v , s.nI(x)))) / (np.linalg.norm(self.v) * np.linalg.norm(s.nI(x))))
+            cos_term = np.cos(2 * theta_Ibot - np.pi)**2
+            denom = s.V - E * cos_term
+            if denom <= 0:
+                self.dead = True
+            else:
+                reflectprob = min(1.0, 2 * s.fopt *np.sqrt((E * cos_term) / denom))
+                rfp = random.uniform(0, 1)
+                if (rfp >= reflectprob):
+                    self.v = c.reflect(self.v, s.nI(x))
+                else:
+                    self.dead = True
+        self.r = r
 
     #def calculateGradientForce(self):
         #gradient = np.array([0,self.r[1]])      TS IS BUNS DONT USE
