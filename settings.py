@@ -30,7 +30,7 @@ def O(x):
     return 10
 
 def I(x):
-    return 0.1 * np.sin(x) - 10
+    return -10
 
 # returns normals for O, I at (x, f(x))
 # you need to manually derive these vectors, have fun!
