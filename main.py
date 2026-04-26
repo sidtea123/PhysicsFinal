@@ -7,14 +7,14 @@ posMatrix = simulate()
 
 pygame.init()
 
-screenWidth = (s.xmax - s.xmin + s.screenBorderOffset) * s.screenScale
-screenHeight = (s.ymax - s.ymin + s.screenBorderOffset) * s.screenScale
+screenWidth = (s.xmax - s.xmin) * s.screenScale + s.screenBorderOffset
+screenHeight = (s.ymax - s.ymin) * s.screenScale + s.screenBorderOffset
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 clock = pygame.time.Clock()
 
 # vector transformation from our simulation to pygame space
 def scaleX(x):
-    return x * s.screenScale + s.screenBorderOffset + (s.spawnxmax - s.spawnxmin) / 2
+    return (x + (s.spawnxmax - s.spawnxmin) / 2) * s.screenScale + s.screenBorderOffset
 
 def scaleY(y):
     return -y * s.screenScale + screenHeight / 2
