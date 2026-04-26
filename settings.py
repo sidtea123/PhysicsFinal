@@ -21,7 +21,7 @@ V = 252
 # =============================================================== #
 
 dt = 0.05       # timestep
-time = 30       # total time of the simulation (0 - time)
+time = 60       # total time of the simulation (0 - time)
 numParts = 1000   # number of Chill Ass Newtrons
 
 # formulas for boundaries
@@ -42,11 +42,11 @@ def nI(x):
 pygameBoundResolution = 50 # how many points to sample for pygame visualization
 
 xmin = 0  # the min and max x positions for the bound functions and window
-xmax = 100  #m
+xmax = 200  #m
 ymin = -15 # min and max for window, but not necessarily bound functions
 ymax = 15
 screenBorderOffset = 10 # cushy bounds to make view not cover bounds
-screenScale = 10 # pygame tiny, need to scale
+screenScale = 5 # pygame tiny, need to scale
 
 particleRadius = 3
 particleColor = (70, 175, 245)
