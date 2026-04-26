@@ -20,9 +20,9 @@ V = 252
 #
 # =============================================================== #
 
-dt = 0.05       # timestep
+dt = 0.01       # timestep
 time = 60       # total time of the simulation (0 - time)
-numParts = 500   # number of Chill Ass Newtrons
+numParts = 1000   # number of Chill Ass Newtrons
 
 # formulas for boundaries
 def O(x):
