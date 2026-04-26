@@ -25,34 +25,46 @@ innerPoints = np.array([(scaleX(x), scaleY(s.I(x)) + s.particleRadius) for x in 
 
 font = pygame.font.Font('freesansbold.ttf', s.fontSize)
 
-text = font.render(f'      CANS\n   {1 / s.dt} FPS\n{s.numParts} Particles', True, s.textColor)
+text = font.render(f'      BUNS\n   {1 / s.dt} FPS\n{s.numParts} Particles', True, s.textColor)
 textRect = text.get_rect()
 textRect.center = (screenWidth // 2, s.textYOffset)
 
 running = True
+start = False
 tIndex = 0
+
+slugWidth = 900
+slugImage = pygame.transform.scale(pygame.image.load("Cyber Slugs.png").convert(), (slugWidth, 490))
+
 while tIndex < len(posMatrix[0]) and running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            start = True
 
+    
     screen.fill(s.backgroundColor)
 
-    # draw particles
-    for p in posMatrix:
-        rPygame = (scaleX(p[tIndex][0]), scaleY(p[tIndex][1]))
-        pygame.draw.circle(screen, s.particleColor, rPygame, s.particleRadius)
-         
-    # draw bounds
-    pygame.draw.lines(screen, s.boundColor, False, outerPoints, s.boundSize)
-    pygame.draw.lines(screen, s.boundColor, False, innerPoints, s.boundSize)
+    if start:
 
-    # draw title text
-    screen.blit(text, textRect)
+        # draw particles
+        for p in posMatrix:
+            rPygame = (scaleX(p[tIndex][0]), scaleY(p[tIndex][1]))
+            pygame.draw.circle(screen, s.particleColor, rPygame, s.particleRadius)
+            
+        # draw bounds
+        pygame.draw.lines(screen, s.boundColor, False, outerPoints, s.boundSize)
+        pygame.draw.lines(screen, s.boundColor, False, innerPoints, s.boundSize)
+
+        # draw title text
+        screen.blit(text, textRect)
+
+        # update time index
+        tIndex += 1
+        # ensuring constant FPS
+    else:
+        screen.blit(slugImage, ((screenWidth - slugWidth) / 2 , 0))
     
     pygame.display.flip()
-
-    # update time index
-    tIndex += 1
-    # ensuring constant FPS
     clock.tick(1 / s.dt)

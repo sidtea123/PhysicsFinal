@@ -22,14 +22,14 @@ V = 252
 
 dt = 0.05       # timestep
 time = 60       # total time of the simulation (0 - time)
-numParts = 1000   # number of Chill Ass Newtrons
+numParts = 500   # number of Chill Ass Newtrons
 
 # formulas for boundaries
 def O(x):
-    return 10
+    return 30
 
 def I(x):
-    return -10
+    return -30
 
 # returns normals for O, I at (x, f(x))
 # you need to manually derive these vectors, have fun!
@@ -43,10 +43,10 @@ pygameBoundResolution = 50 # how many points to sample for pygame visualization
 
 xmin = 0  # the min and max x positions for the bound functions and window
 xmax = 200  #m
-ymin = -15 # min and max for window, but not necessarily bound functions
-ymax = 15
+ymin = -40 # min and max for window, but not necessarily bound functions
+ymax = 40
 screenBorderOffset = 10 # cushy bounds to make view not cover bounds
-screenScale = 5 # pygame tiny, need to scale
+screenScale = 6 # pygame tiny, need to scale
 
 particleRadius = 3
 particleColor = (70, 175, 245)
@@ -57,15 +57,15 @@ fontSize = 24
 textYOffset = 45
 boundSize = 2
 
-spawnymin = -9.00  #m
-spawnymax = 9.00  #m
-spawnxmin = 0.1  #m
-spawnxmax = 5  #m
+spawnymin = -28.00  #m
+spawnymax = 28.00  #m
+spawnxmin = 0.10  #m
+spawnxmax = 10.00  #m
 
 vinimin = 2 #m/s
-vinimax = 5  #m/s
-thetamin = -np.pi/4 #radians
-thetamax = np.pi/4  #radians
+vinimax = 8  #m/s
+thetamin = -np.pi/3 #radians
+thetamax = np.pi/3  #radians
 
 
 # Magnetic Field
