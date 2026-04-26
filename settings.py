@@ -57,7 +57,7 @@ fontSize = 24
 textYOffset = 45
 boundSize = 2
 
-spawnymin = 0.11  #m
+spawnymin = -9.00  #m
 spawnymax = 9.00  #m
 spawnxmin = 0.1  #m
 spawnxmax = 5  #m
