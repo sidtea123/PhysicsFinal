@@ -69,4 +69,4 @@ thetamax = np.pi/4  #radians
 
 
 # Magnetic Field
-B = -2.69*10**-19 * 0.5
+B = -2.69*10**-19

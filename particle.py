@@ -59,12 +59,15 @@ class Particle:
         print('i died')
 
     def mag_field(self):
-        if self.r[1] > 0.5 * s.ymax:
+        midline = s.ymax + s.ymin / 2
+        dst = self.r[1] - midline
+        
+        if dst > 0:
             B_high = 0.25 * s.B
             mag_force = self.p * s.mu * B_high
-        if self.r[1] == 0.5 * s.ymax:
+        elif dst == 0:
             mag_force = self.p * s.mu * s.B
-        if self.r[1] < 0.5 * s.ymax:
+        else:
             B_low = 1.25 * s.B
             mag_force = self.p * s.mu * B_low
         return mag_force
