@@ -20,7 +20,7 @@ V = 252
 #
 # =============================================================== #
 
-dt = 0.01       # timestep
+dt = 0.02       # timestep
 time = 60       # total time of the simulation (0 - time)
 numParts = 1000   # number of Chill Ass Newtrons
 

@@ -6,6 +6,8 @@ import random
 particles = [0 for _ in range(s.numParts)]
 positions = [[0] * int(s.time / s.dt + 1) for _ in range(s.numParts)]
 
+partialTimes = np.linspace(0, s.time, 10)
+
 def simulate():
     initalizeParticles()
 

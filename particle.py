@@ -57,7 +57,6 @@ class Particle:
     def die(self):
         self.dead = True
         self.v = np.array([0,0])
-        print('i died')
 
     def mag_field(self):
         midline = (s.ymax + s.ymin) / 2
