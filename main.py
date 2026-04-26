@@ -40,8 +40,8 @@ while tIndex < len(posMatrix[0]) and running:
 
     # draw particles
     for p in posMatrix:
-         rPygame = (scaleX(p[tIndex][0]), scaleY(p[tIndex][1]))
-         pygame.draw.circle(screen, s.particleColor, rPygame, s.particleRadius)
+        rPygame = (scaleX(p[tIndex][0]), scaleY(p[tIndex][1]))
+        pygame.draw.circle(screen, s.particleColor, rPygame, s.particleRadius)
          
     # draw bounds
     pygame.draw.lines(screen, s.boundColor, False, outerPoints, s.boundSize)

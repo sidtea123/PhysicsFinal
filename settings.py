@@ -12,8 +12,8 @@ m = 1.67*10**-27
 #
 # =============================================================== #
 g = 9.8
-fopt = 0.08 * 10**-5
-V = 252 * 10**-9
+fopt = 0.08
+V = 252
 # =============================================================== #
 #
 # simulation variables
@@ -22,7 +22,7 @@ V = 252 * 10**-9
 
 dt = 0.05       # timestep
 time = 30       # total time of the simulation (0 - time)
-numParts = 100   # number of Chill Ass Newtrons
+numParts = 1000   # number of Chill Ass Newtrons
 
 # formulas for boundaries
 def O(x):
@@ -63,7 +63,7 @@ spawnxmin = 0.1  #m
 spawnxmax = 5  #m
 
 vinimin = 2 #m/s
-vinimax = 6  #m/s
+vinimax = 5  #m/s
 thetamin = -np.pi/4 #radians
 thetamax = np.pi/4  #radians
 

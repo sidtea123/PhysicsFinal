@@ -39,18 +39,18 @@ class Particle:
                 self.v = c.reflect(self.v, s.nI(self.r[0]))
 
     def tryLoss(self, n):
-        E = 1/2 * s.m * np.dot(self.v, self.v)
+        E = 1/2 * s.m * np.dot(self.v, self.v) * 6.242e18 * 10**9 # joules to neV
         r = self.r + self.v * s.dt
         x, y = r
         # angle of incidence
-        theta = np.pi / 2 - np.abs(np.arccos(np.dot(self.v, n(x)) / (np.dot(self.v, self.v) * np.dot(n(x), n(x)))))
+        theta = np.abs(np.pi / 2 - np.abs(np.arccos(np.dot(self.v, n(x)) / (np.dot(self.v, self.v) * np.dot(n(x), n(x))))))
         cos_term = np.cos(theta)**2
         denom = s.V - E * cos_term
         
         if denom <= 0:
             return False
         else:
-            reflectprob = min(1.0, 2 * s.fopt *np.sqrt((E * cos_term) / denom))
+            reflectprob = 2 * s.fopt * np.sqrt(E * cos_term / denom)
             rfp = random.uniform(0, 1)
             return rfp < reflectprob
 
