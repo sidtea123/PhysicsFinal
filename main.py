@@ -3,9 +3,12 @@ from computation import simulate
 import pygame
 import numpy as np
 
+print('running simulation...')
 posMatrix = simulate()
+print('finished sim, initializing pygame...')
 
-pygame.init()
+pygame.display.init()
+pygame.font.init()
 
 screenWidth = (s.xmax - s.xmin) * s.screenScale + s.screenBorderOffset
 screenHeight = (s.ymax - s.ymin) * s.screenScale + s.screenBorderOffset
@@ -36,6 +39,7 @@ tIndex = 0
 slugWidth = 900
 slugImage = pygame.transform.scale(pygame.image.load("Cyber Slugs.png").convert(), (slugWidth, 490))
 
+print('rendering BUNS')
 while tIndex < len(posMatrix[0]) and running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

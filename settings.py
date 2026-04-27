@@ -1,19 +1,15 @@
 import numpy as np
 # =============================================================== #
 #
-#  particle variables
+#  CONSTANTS
 #
 # =============================================================== #
-mu = -6.0293*10**-8  #actual magnetic moment of neturon is -6.0293e-8 eV
-m = 1.67*10**-27
-# =============================================================== #
-#
-# environment variables
-#
-# =============================================================== #
-g = 9.8
-fopt = 0.08
-V = 252
+mu = -6.0293*10**-8 # actual magnetic moment of neturon is -6.0293e-8 eV
+m = 1.67*10**-27    # magnetic moment of neutron
+g = 9.8             # defying grabvity
+fopt = 0.08         # ask benjamin
+V = 252             # complex optical potential: Beryllium 
+B = -2.69*10**-19   # Magnetic Field
 # =============================================================== #
 #
 # simulation variables
@@ -26,10 +22,10 @@ numParts = 1000   # number of Chill Ass Newtrons
 
 # formulas for boundaries
 def O(x):
-    return 30
+    return 28
 
 def I(x):
-    return -30
+    return -28
 
 # returns normals for O, I at (x, f(x))
 # you need to manually derive these vectors, have fun!
@@ -57,16 +53,14 @@ fontSize = 24
 textYOffset = 45
 boundSize = 2
 
-spawnymin = -28.00  #m
-spawnymax = 28.00  #m
-spawnxmin = 0.10  #m
+spawnymin = -27.00  #m
+spawnymax = 27.00  #m
+spawnxmin = 0.0  #m
 spawnxmax = 10.00  #m
+
+midline = (ymax + ymin) / 2 # no touchy
 
 vinimin = 2 #m/s
 vinimax = 8  #m/s
 thetamin = -np.pi/3 #radians
 thetamax = np.pi/3  #radians
-
-
-# Magnetic Field
-B = -2.69*10**-19

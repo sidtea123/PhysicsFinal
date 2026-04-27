@@ -11,18 +11,15 @@ class Particle:
         self.dead = False
 
     def runTimestep(self):
-        f = self.caluclateForce()
-        self.v += f / s.m * s.dt
+        if (self.dead):
+            return self.r
+        self.v += self.caluclateForce() / s.m * s.dt
         self.boundaryCheck()
         self.r += self.v * s.dt
-        r = self.r
-        return r
+        return self.r
 
     def caluclateForce(self):
-        Fg = np.array([0, -s.g  * s.m])
-        Fb = np.array([0,self.mag_field()])  #want Fg = Fb @ middle. Fb<Fg @ y>middle. Fb>Fg @ y<middle.
-
-        return Fg + Fb
+        return np.array([0, -s.g * s.m + self.mag_field()])
     
     # wall is made of Beryllium due to high optical potential of 252NeV
     # now using custom bounds formulas in settings
@@ -40,16 +37,16 @@ class Particle:
 
     def tryLoss(self, n):
         E = 1/2 * s.m * np.dot(self.v, self.v) * 6.242e18 * 10**9 # joules to neV
-        r = self.r + self.v * s.dt
-        x, y = r
+
+        if E > s.V:
+            return True
+        
+        x = (self.r + self.v * s.dt)[0]
         # angle of incidence
         theta = np.abs(np.pi / 2 - np.abs(np.arccos(np.dot(self.v, n(x)) / (np.dot(self.v, self.v) * np.dot(n(x), n(x))))))
         cos_term = np.cos(theta)**2
         denom = s.V - E * cos_term
         
-        if E > s.V:
-            self.dead = True
-
         if denom <= 0:
             return False
         else:
@@ -62,18 +59,7 @@ class Particle:
         self.v = np.array([0,0])
 
     def mag_field(self):
-        midline = (s.ymax + s.ymin) / 2
-        dst = self.r[1] - midline
+        if self.r[1] > s.midline:
+            return self.p * s.mu * 0.25 * s.B
         
-        if self.r[1] > midline:
-            B_high = 0.25 * s.B
-            mag_force = self.p * s.mu * B_high
-        elif self.r[1] == midline:
-            mag_force = self.p * s.mu * s.B
-        else:
-            B_low = 1.5 * s.B
-            mag_force = self.p * s.mu * B_low
-        return mag_force
-
-        #I think this might work but changing the y bounds (ymax = #) doesnt effect the bounds in pygame
-        #neccessary to change bounds because working off of y position
+        return self.p * s.mu * 1.5 * s.B

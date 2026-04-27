@@ -15,11 +15,8 @@ def simulate():
 
     for t in range(times.size):
         for i, p in enumerate(particles):
-            if p.dead:
-                positions[i][t + 1] = positions[i][t]
-            else:
-                r = p.runTimestep()
-                positions[i][t + 1] = r.copy()
+            r = p.runTimestep()
+            positions[i][t + 1] = r.copy()
 
     return positions
     
