@@ -24,16 +24,17 @@ class Particle:
     # wall is made of Beryllium due to high optical potential of 252NeV
     # now using custom bounds formulas in settings
     def boundaryCheck(self):
-        if (self.r[1] > s.O(self.r[0])):
+        x, y = self.r
+        if (y > s.O(x)):
             if (self.tryLoss(s.nO)):
                 self.die()
             else:
-                self.v = c.reflect(self.v, s.nO(self.r[0]))
-        elif (self.r[1] < s.I(self.r[0])):
+                self.v = c.reflect(self.v, s.nO(x))
+        elif (y < s.I(x)):
             if (self.tryLoss(s.nI)):
                 self.die()
             else:
-                self.v = c.reflect(self.v, s.nI(self.r[0]))
+                self.v = c.reflect(self.v, s.nI(x))
 
     def tryLoss(self, n):
         E = 1/2 * s.m * np.dot(self.v, self.v) * 6.242e18 * 10**9 # joules to neV
@@ -42,9 +43,9 @@ class Particle:
             return True
         
         x = (self.r + self.v * s.dt)[0]
-        # angle of incidence
-        theta = np.abs(np.pi / 2 - np.abs(np.arccos(np.dot(self.v, n(x)) / (np.dot(self.v, self.v) * np.dot(n(x), n(x))))))
-        cos_term = np.cos(theta)**2
+        # angle of incidence calculation
+        # we taking the cosine of the arccosine of something, may as well simplify
+        cos_term = (np.dot(self.v, n(x)) / (np.dot(self.v, self.v) * np.dot(n(x), n(x))))**2
         denom = s.V - E * cos_term
         
         if denom <= 0:
