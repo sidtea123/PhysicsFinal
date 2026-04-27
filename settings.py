@@ -21,7 +21,7 @@ V = 252
 # =============================================================== #
 
 dt = 0.02       # timestep
-time = 60       # total time of the simulation (0 - time)
+time = 30       # total time of the simulation (0 - time)
 numParts = 1000   # number of Chill Ass Newtrons
 
 # formulas for boundaries
@@ -48,7 +48,7 @@ ymax = 40
 screenBorderOffset = 10 # cushy bounds to make view not cover bounds
 screenScale = 6 # pygame tiny, need to scale
 
-particleRadius = 3
+particleRadius = 2
 particleColor = (70, 175, 245)
 backgroundColor = (70, 70, 70)
 boundColor = (30, 30, 30)

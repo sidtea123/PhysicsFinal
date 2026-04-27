@@ -47,6 +47,9 @@ class Particle:
         cos_term = np.cos(theta)**2
         denom = s.V - E * cos_term
         
+        if E > s.V:
+            self.dead = True
+
         if denom <= 0:
             return False
         else:
