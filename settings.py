@@ -20,6 +20,8 @@ dt = 0.02       # timestep
 time = 30       # total time of the simulation (0 - time)
 numParts = 1000   # number of Chill Ass Newtrons
 
+totalSteps = int(time / dt) # DO NOT TOUCH total number of time steps in simulation
+
 # formulas for boundaries
 def O(x):
     return 28

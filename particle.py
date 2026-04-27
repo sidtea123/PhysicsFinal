@@ -24,7 +24,7 @@ class Particle:
     # wall is made of Beryllium due to high optical potential of 252NeV
     # now using custom bounds formulas in settings
     def boundaryCheck(self):
-        x, y = self.r
+        x, y = self.r + self.v * s.dt
         if (y > s.O(x)):
             if (self.tryLoss(s.nO)):
                 self.die()
@@ -51,8 +51,10 @@ class Particle:
         if denom <= 0:
             return False
         else:
+            # calculates true probability of loss
             reflectprob = 2 * s.fopt * np.sqrt(E * cos_term / denom)
             rfp = random.uniform(0, 1)
+            # rolls the dice
             return rfp < reflectprob
 
     def die(self):

@@ -3,20 +3,18 @@ import settings as s
 from particle import Particle
 import random
 
-particles = [0 for _ in range(s.numParts)]
-positions = [[0] * int(s.time / s.dt + 1) for _ in range(s.numParts)]
-
-partialTimes = np.linspace(0, s.time, 10)
+# array of particles
+particles = np.empty(s.numParts, dtype=Particle)
+# rank 3 tensor to store positions of particles
+positions = np.empty((s.numParts, s.totalSteps + 1, 2))
 
 def simulate():
     initalizeParticles()
 
-    times = np.linspace(0, s.time, int(s.time / s.dt))
-
-    for t in range(times.size):
+    # index 0 is the initial state of the system, so start at 1
+    for t in range(1, s.totalSteps + 1):
         for i, p in enumerate(particles):
-            r = p.runTimestep()
-            positions[i][t + 1] = r.copy()
+            positions[i, t] = p.runTimestep()
 
     return positions
     
@@ -28,9 +26,9 @@ def initalizeParticles():
         r = np.array([random.uniform(s.spawnxmin,s.spawnxmax),random.uniform(s.spawnymin,s.spawnymax)])
         v = np.array([vini*np.cos(theta),vini*np.sin(theta)])
         particles[i] = Particle(r, v, 1)
-        positions[i][0] = r.copy()
+        positions[i][0] = r
 
 
 # reflects vector v across surface normal n, returns reflected
 def reflect(v, n):
-    return (v - 2 * np.dot(v, n) * n).copy()
+    return v - 2 * np.dot(v, n) * n
