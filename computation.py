@@ -8,14 +8,24 @@ particles = np.empty(s.numParts, dtype=Particle)
 # rank 3 tensor to store positions of particles
 positions = np.empty((s.numParts, s.totalSteps + 1, 2))
 
+# beefy sim code
 def simulate():
     initalizeParticles()
-
+    print('instantiated particles...')
+    prev = 0
     # index 0 is the initial state of the system, so start at 1
     for t in range(1, s.totalSteps + 1):
         for i, p in enumerate(particles):
             positions[i, t] = p.runTimestep()
 
+        # nice percentage output, lets you watch progress
+        pct = int((t / (s.totalSteps + 1)) * 100)
+        if (pct % 5 == 0):
+            if (pct != prev):
+                print(f'{pct:.0f}% done...')
+                prev = pct
+
+    print('100% done...')
     return positions
     
 # need to initialize particle and initial position
@@ -28,7 +38,16 @@ def initalizeParticles():
         particles[i] = Particle(r, v, 1)
         positions[i][0] = r
 
+# saves code to file, may take a bit for more detailed sims
+if __name__ == '__main__':
+    positions = simulate()
+    
+    print('writing to file...')
+    with open('10k_100FPS_pipe.txt', 'w') as outfile:
+        # formats matrix to readable format in file
+        outfile.write('# Array shape: {0}\n'.format(positions.shape))
+        for data_slice in positions:
+            np.savetxt(outfile, data_slice, fmt='%-7.2f')
+            outfile.write('# New slice\n')
 
-# reflects vector v across surface normal n, returns reflected
-def reflect(v, n):
-    return v - 2 * np.dot(v, n) * n
+    print('done writing to file :)')

@@ -4,21 +4,21 @@ import numpy as np
 #  CONSTANTS
 #
 # =============================================================== #
-mu = -6.0293*10**-8 # actual magnetic moment of neturon is -6.0293e-8 eV
-m = 1.67*10**-27    # magnetic moment of neutron
-g = 9.8             # defying grabvity
-fopt = 0.08         # ask benjamin
-V = 252             # complex optical potential: Beryllium 
-B = -2.69*10**-19   # Magnetic Field
+mu = -6.0293*10**-8         # actual magnetic moment of neturon is -6.0293e-8 eV
+m = 1.67*10**-27            # magnetic moment of neutron
+g = 9.8                     # defying grabvity
+fopt = 0.08                 # ask benjamin
+V = 252                     # complex optical potential of bounds: Beryllium 
+B = -2.69*10**-19           # Magnetic Field
 # =============================================================== #
 #
 # simulation variables
 #
 # =============================================================== #
 
-dt = 0.02       # timestep
-time = 30       # total time of the simulation (0 - time)
-numParts = 1000   # number of Chill Ass Newtrons
+dt = 0.01                   # timestep
+time = 30                   # total time of the simulation (0 - time)
+numParts = 10000             # number of Beautiful Ultracold Neutrons
 
 totalSteps = int(time / dt) # DO NOT TOUCH total number of time steps in simulation
 
@@ -37,16 +37,16 @@ def nO(x):
 def nI(x):
     return np.array([0, 1])
 
-pygameBoundResolution = 50 # how many points to sample for pygame visualization
+pygameBoundResolution = 50  # how many points to sample for pygame visualization
 
-xmin = 0  # the min and max x positions for the bound functions and window
-xmax = 200  #m
-ymin = -40 # min and max for window, but not necessarily bound functions
+xmin = 0                    # the min and max x positions for the bound functions and window
+xmax = 200                  # m
+ymin = -40                  # min and max for window, but not necessarily bound functions
 ymax = 40
-screenBorderOffset = 10 # cushy bounds to make view not cover bounds
-screenScale = 6 # pygame tiny, need to scale
+screenBorderOffset = 10     # cushy bounds to make view not cover bounds
+screenScale = 6             # pygame tiny, need to scale
 
-particleRadius = 2
+particleRadius = 1.5
 particleColor = (70, 175, 245)
 backgroundColor = (70, 70, 70)
 boundColor = (30, 30, 30)
@@ -55,14 +55,14 @@ fontSize = 24
 textYOffset = 45
 boundSize = 2
 
-spawnymin = -27.00  #m
-spawnymax = 27.00  #m
-spawnxmin = 0.0  #m
-spawnxmax = 10.00  #m
+spawnymin = -27.00          # bounds for the spawn range of the particles
+spawnymax = 27.00           # m
+spawnxmin = 0.0             # m
+spawnxmax = 10.00           # m
 
 midline = (ymax + ymin) / 2 # no touchy
 
-vinimin = 2 #m/s
-vinimax = 8  #m/s
-thetamin = -np.pi/3 #radians
-thetamax = np.pi/3  #radians
+vinimin = 2                 # bounds for the speed and angle of the particles at spawn
+vinimax = 8                 # m/s
+thetamin = -np.pi/3         # radians
+thetamax = np.pi/3          # radians

@@ -1,25 +1,29 @@
 import settings as s
 import numpy as np
-import computation as c
 import random
 
+# holds data for particle, functionality for update
 class Particle:
     def __init__(self, r, v, p):
         self.r = r
         self.v = v
         self.p = p
+        # starts out alive, glass half full if you will
         self.dead = False
 
+    # ran every frame
     def runTimestep(self):
+        # if its dead render it somewhere offscreen
         if (self.dead):
-            return self.r
+            return np.array([-1000, -1000])
         self.v += self.caluclateForce() / s.m * s.dt
         self.boundaryCheck()
         self.r += self.v * s.dt
         return self.r
 
+    # Fg + F(b field)
     def caluclateForce(self):
-        return np.array([0, -s.g * s.m + self.mag_field()])
+        return np.array([0, -s.g * s.m]) + self.mag_field()
     
     # wall is made of Beryllium due to high optical potential of 252NeV
     # now using custom bounds formulas in settings
@@ -29,13 +33,14 @@ class Particle:
             if (self.tryLoss(s.nO)):
                 self.die()
             else:
-                self.v = c.reflect(self.v, s.nO(x))
+                self.v = self.reflect(self.v, s.nO(x))
         elif (y < s.I(x)):
             if (self.tryLoss(s.nI)):
                 self.die()
             else:
-                self.v = c.reflect(self.v, s.nI(x))
+                self.v = self.reflect(self.v, s.nI(x))
 
+    # for each collision, theres a change the neutron scatters depending on its energy and the bound's parameters
     def tryLoss(self, n):
         E = 1/2 * s.m * np.dot(self.v, self.v) * 6.242e18 * 10**9 # joules to neV
 
@@ -57,12 +62,18 @@ class Particle:
             # rolls the dice
             return rfp < reflectprob
 
+    # kills off particle
     def die(self):
         self.dead = True
         self.v = np.array([0,0])
 
+    # gavin's mag field, makes particles oscillate about midpoint of bounds
     def mag_field(self):
         if self.r[1] > s.midline:
-            return self.p * s.mu * 0.25 * s.B
+            return np.array([0, self.p * s.mu * 0.25 * s.B])
         
-        return self.p * s.mu * 1.5 * s.B
+        return np.array([0, self.p * s.mu * 1.5 * s.B])
+    
+    # reflects vector v across surface normal n, returns reflected
+    def reflect(self, v, n):
+        return v - 2 * np.dot(v, n) * n
