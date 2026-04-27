@@ -43,7 +43,7 @@ if __name__ == '__main__':
     positions = simulate()
     
     print('writing to file...')
-    with open('10k_100FPS_pipe.txt', 'w') as outfile:
+    with open('output.txt', 'w') as outfile:
         # formats matrix to readable format in file
         outfile.write('# Array shape: {0}\n'.format(positions.shape))
         for data_slice in positions:

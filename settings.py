@@ -1,4 +1,5 @@
 import numpy as np
+
 # =============================================================== #
 #
 #  CONSTANTS
@@ -17,7 +18,7 @@ B = -2.69*10**-19           # Magnetic Field
 # =============================================================== #
 
 dt = 0.01                   # timestep
-time = 30                   # total time of the simulation (0 - time)
+time = 20                   # total time of the simulation (0 - time)
 numParts = 10000             # number of Beautiful Ultracold Neutrons
 
 totalSteps = int(time / dt) # DO NOT TOUCH total number of time steps in simulation
