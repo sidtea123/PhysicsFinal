@@ -17,9 +17,9 @@ B = -2.69*10**-19           # Magnetic Field
 #
 # =============================================================== #
 
-dt = 0.01                   # timestep
-time = 20                   # total time of the simulation (0 - time)
-numParts = 10000             # number of Beautiful Ultracold Neutrons
+dt = 0.02                   # timestep
+time = 80                   # total time of the simulation (0 - time)
+numParts = 100000           # number of Beautiful Ultracold Neutrons
 
 totalSteps = int(time / dt) # DO NOT TOUCH total number of time steps in simulation
 
@@ -41,14 +41,14 @@ def nI(x):
 pygameBoundResolution = 50  # how many points to sample for pygame visualization
 
 xmin = 0                    # the min and max x positions for the bound functions and window
-xmax = 200                  # m
+xmax = 300                  # m
 ymin = -40                  # min and max for window, but not necessarily bound functions
 ymax = 40
 screenBorderOffset = 10     # cushy bounds to make view not cover bounds
-screenScale = 6             # pygame tiny, need to scale
+screenScale = 5             # pygame tiny, need to scale
 
-particleRadius = 1.5
-particleColor = (70, 175, 245)
+particleRadius = 1.3
+particleColor = (70, 175, 245, 255)
 backgroundColor = (70, 70, 70)
 boundColor = (30, 30, 30)
 textColor = (179, 128, 18)
@@ -56,14 +56,14 @@ fontSize = 24
 textYOffset = 45
 boundSize = 2
 
-spawnymin = -27.00          # bounds for the spawn range of the particles
-spawnymax = 27.00           # m
+spawnymin = -26.00          # bounds for the spawn range of the particles
+spawnymax = 26.00           # m
 spawnxmin = 0.0             # m
-spawnxmax = 10.00           # m
+spawnxmax = 4.00            # m
 
 midline = (ymax + ymin) / 2 # no touchy
 
 vinimin = 2                 # bounds for the speed and angle of the particles at spawn
-vinimax = 8                 # m/s
-thetamin = -np.pi/3         # radians
-thetamax = np.pi/3          # radians
+vinimax = 7                 # m/s
+thetamin = -np.pi/2.5       # radians
+thetamax = np.pi/2.5        # radians

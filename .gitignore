@@ -3,7 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 
-10k_100FPS_pipe.txt
+100k_50FPS_long.npy
+100k_50FPS_longer.npy
 
 # C extensions
 *.so

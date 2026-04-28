@@ -1,12 +1,13 @@
 import numpy as np
 import settings as s
+from render import scaleVec
 from particle import Particle
 import random
 
 # array of particles
 particles = np.empty(s.numParts, dtype=Particle)
 # rank 3 tensor to store positions of particles
-positions = np.empty((s.numParts, s.totalSteps + 1, 2))
+positions = np.empty((s.totalSteps + 1, s.numParts, 2))
 
 # beefy sim code
 def simulate():
@@ -16,7 +17,7 @@ def simulate():
     # index 0 is the initial state of the system, so start at 1
     for t in range(1, s.totalSteps + 1):
         for i, p in enumerate(particles):
-            positions[i, t] = p.runTimestep()
+            positions[t, i] = scaleVec(p.runTimestep())
 
         # nice percentage output, lets you watch progress
         pct = int((t / (s.totalSteps + 1)) * 100)
@@ -36,18 +37,20 @@ def initalizeParticles():
         r = np.array([random.uniform(s.spawnxmin,s.spawnxmax),random.uniform(s.spawnymin,s.spawnymax)])
         v = np.array([vini*np.cos(theta),vini*np.sin(theta)])
         particles[i] = Particle(r, v, 1)
-        positions[i][0] = r
+        positions[0][i] = r
 
 # saves code to file, may take a bit for more detailed sims
 if __name__ == '__main__':
     positions = simulate()
     
     print('writing to file...')
-    with open('output.txt', 'w') as outfile:
-        # formats matrix to readable format in file
-        outfile.write('# Array shape: {0}\n'.format(positions.shape))
-        for data_slice in positions:
-            np.savetxt(outfile, data_slice, fmt='%-7.2f')
-            outfile.write('# New slice\n')
+    # positions.tofile('100k_50FPS_pipe.txt')
+    np.save('output.npy', positions)
+    # with open('100k_50FPS_pipe.txt', 'w') as outfile:
+    #     # formats matrix to readable format in file
+    #     outfile.write('# Array shape: {0}\n'.format(positions.shape))
+    #     for data_slice in positions:
+    #         np.savetxt(outfile, data_slice, fmt='%-7.2f')
+    #         outfile.write('# New slice\n')
 
     print('done writing to file :)')
