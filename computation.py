@@ -15,9 +15,9 @@ def simulate():
     initalizeParticles()
     print('instantiated particles...')
     prev = 0
-    vTot = 0
     # index 0 is the initial state of the system, so start at 1
     for t in range(1, s.totalSteps + 1):
+        vTot = 0
         for i, p in enumerate(particles):
             positions[t, i] = scaleVec(p.runTimestep())
             vTot += np.dot(p.v, p.v)
