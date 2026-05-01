@@ -5,6 +5,8 @@ __pycache__/
 
 100k_50FPS_long.npy
 100k_50FPS_longer.npy
+energies.npy
+output.npy
 
 # C extensions
 *.so
