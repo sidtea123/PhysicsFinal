@@ -18,8 +18,8 @@ B = -2.69*10**-19           # Magnetic Field
 # =============================================================== #
 
 dt = 0.02                   # timestep
-time = 80                   # total time of the simulation (0 - time)
-numParts = 100000           # number of Beautiful Ultracold Neutrons
+time = 20                   # total time of the simulation (0 - time)
+numParts = 1000           # number of Beautiful Ultracold Neutrons
 
 totalSteps = int(time / dt) # DO NOT TOUCH total number of time steps in simulation
 

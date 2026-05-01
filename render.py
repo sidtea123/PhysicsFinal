@@ -16,7 +16,7 @@ def scaleVec(v):
     return np.array([scaleX(v[0]), scaleY(v[1])])
 
 if __name__ == '__main__':
-    fileName = '100k_50FPS_longer.npy'
+    fileName = 'output.npy'
 
     print('loading data from file...')
 

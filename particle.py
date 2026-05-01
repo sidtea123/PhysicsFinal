@@ -8,6 +8,7 @@ class Particle:
         self.r = r
         self.v = v
         self.p = p
+        self.E = None
         # starts out alive, glass half full if you will
         self.dead = False
 
@@ -42,9 +43,9 @@ class Particle:
 
     # for each collision, theres a change the neutron scatters depending on its energy and the bound's parameters
     def tryLoss(self, n):
-        E = 1/2 * s.m * np.dot(self.v, self.v) * 6.242e18 * 10**9 # joules to neV
-
-        if E > s.V:
+        self.E = 1/2 * s.m * np.dot(self.v, self.v) * 6.242e18 * 10**9 # joules to neV
+        E = self.E
+        if self.E > s.V:
             return True
         
         x = (self.r + self.v * s.dt)[0]
